@@ -14,18 +14,32 @@ class _HomeScreenState extends State<HomeScreen> {
   final AudioPlayer _player = AudioPlayer();
   bool _loading = false;
 
+  String? _selectedVoiceId; // save voiceId
+  String? _selectedVoiceName; // show voice name
+
   Future<void> _speak() async {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
 
     setState(() => _loading = true);
 
-    final audioBytes = await ElevenLabsService.textToSpeech(text);
+    final audioBytes =
+        await ElevenLabsService.textToSpeech(text, voiceId: _selectedVoiceId);
     if (audioBytes != null) {
       await _player.play(BytesSource(audioBytes));
     }
 
     setState(() => _loading = false);
+  }
+
+  Future<void> _selectVoice() async {
+    final result = await Navigator.pushNamed(context, '/voices');
+    if (result != null && result is String) {
+      setState(() {
+        _selectedVoiceId = result;
+        _selectedVoiceName = "Selected Voice ID: $result";
+      });
+    }
   }
 
   @override
@@ -171,12 +185,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: double.infinity,
                   height: 55,
                   child: ElevatedButton.icon(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/voices'),
+                    onPressed: _selectVoice,
                     icon: const Icon(Icons.voice_chat, color: Colors.white),
-                    label: const Text(
-                      "Select Voice",
-                      style: TextStyle(
+                    label: Text(
+                      _selectedVoiceName ?? "Select Voice",
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     style: ElevatedButton.styleFrom(
