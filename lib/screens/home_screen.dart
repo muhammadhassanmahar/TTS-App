@@ -202,6 +202,32 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+
+                const SizedBox(height: 20),
+
+                // 🔥 Streaming Mode Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 55,
+                  child: ElevatedButton.icon(
+                    onPressed: () =>
+                        Navigator.pushNamed(context, '/stream'),
+                    icon: const Icon(Icons.spatial_audio, color: Colors.white),
+                    label: const Text(
+                      "Streaming Mode",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      elevation: 6,
+                      shadowColor: Colors.black.withValues(alpha: 0.3),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
