@@ -38,26 +38,33 @@ class _VoiceSelectionScreenState extends State<VoiceSelectionScreen> {
       appBar: AppBar(title: const Text("Select Voice")),
       body: loading
           ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: voices.length,
-              itemBuilder: (context, index) {
-                final voice = voices[index];
-                return Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  child: ListTile(
-                    leading: const Icon(Icons.record_voice_over, color: Colors.deepPurple),
-                    title: Text(voice['name'] ?? "Unknown"),
-                    subtitle: Text("Category: ${voice['category'] ?? 'N/A'}"),
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Selected: ${voice['name']}")),
-                      );
-                      Navigator.pop(context);
-                    },
-                  ),
-                );
-              },
-            ),
+          : voices.isEmpty
+              ? const Center(child: Text("No voices found."))
+              : ListView.builder(
+                  itemCount: voices.length,
+                  itemBuilder: (context, index) {
+                    final voice = voices[index];
+                    final voiceId = voice['voice_id'];
+                    return Card(
+                      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ListTile(
+                        leading: const Icon(Icons.record_voice_over, color: Colors.deepPurple),
+                        title: Text(
+                          voice['name'] ?? "Unknown",
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text("Category: ${voice['category'] ?? 'N/A'}"),
+                        onTap: () {
+                          Navigator.pop(context, voiceId); // Return selected voiceId
+                        },
+                      ),
+                    );
+                  },
+                ),
     );
   }
 }
