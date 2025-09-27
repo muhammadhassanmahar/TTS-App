@@ -5,6 +5,7 @@ import 'screens/voice_selection_screen.dart';
 import 'screens/history_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/settings_screen.dart';
+import 'screens/streaming_screen.dart'; // 🔥 NEW import
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/history': (context) => const HistoryScreen(),
         '/profile': (context) => const ProfileScreen(),
         '/settings': (context) => const SettingsScreen(),
+        '/stream': (context) => const StreamingScreen(), // 🔥 NEW route
       },
     );
   }
