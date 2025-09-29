@@ -1,0 +1,19 @@
+# Flutter/Dart
+build/
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+
+# VSCode / Android Studio settings
+.idea/
+.vscode/
+*.iml
+
+# iOS / Android build files
+ios/Pods/
+android/.gradle/
+android/app/build/
+
+# Env files (secret keys)
+.env
