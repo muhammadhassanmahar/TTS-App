@@ -22,8 +22,9 @@ class _VoiceSettingsScreenState extends State<VoiceSettingsScreen> {
   }
 
   Future<void> _fetchSettings() async {
-    final response =
-        await ElevenLabsService.getVoiceSettings(widget.voiceId);
+    final response = await ElevenLabsService.getVoiceSettings(widget.voiceId);
+    if (!mounted) return; // ✅ context safety
+
     if (response != null) {
       final decoded = jsonDecode(response);
       setState(() {
@@ -43,13 +44,17 @@ class _VoiceSettingsScreenState extends State<VoiceSettingsScreen> {
       stability,
       similarity,
     );
+    if (!mounted) return; // ✅ context safety
+
     setState(() => loading = false);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(success
-            ? "Settings updated successfully!"
-            : "Failed to update settings"),
+        content: Text(
+          success
+              ? "Settings updated successfully!"
+              : "Failed to update settings",
+        ),
       ),
     );
   }
