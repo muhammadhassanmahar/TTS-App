@@ -21,6 +21,7 @@ class _VoiceSelectionScreenState extends State<VoiceSelectionScreen> {
 
   Future<void> _fetchVoices() async {
     final data = await ElevenLabsService.getVoices();
+    if (!mounted) return; // ✅ added safety
     if (data != null) {
       final decoded = jsonDecode(data);
       setState(() {
@@ -43,6 +44,7 @@ class _VoiceSelectionScreenState extends State<VoiceSelectionScreen> {
       ),
     );
 
+    if (!mounted) return; // ✅ added safety
     if (result != null && result is String) {
       Navigator.pop(context, result); // Return selected voiceId back
     }
@@ -108,6 +110,7 @@ class _VoiceSettingsScreenState extends State<VoiceSettingsScreen> {
 
   Future<void> _loadSettings() async {
     final data = await ElevenLabsService.getVoiceSettings(widget.voiceId);
+    if (!mounted) return; // ✅ added safety
     if (data != null) {
       final decoded = jsonDecode(data);
       setState(() {
@@ -126,6 +129,7 @@ class _VoiceSettingsScreenState extends State<VoiceSettingsScreen> {
       stability,
       similarity,
     );
+    if (!mounted) return; // ✅ added safety
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Voice settings updated successfully")),
