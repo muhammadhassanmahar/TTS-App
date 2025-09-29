@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'screens/splash_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/voice_selection_screen.dart';
@@ -7,7 +9,16 @@ import 'screens/profile_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/streaming_screen.dart'; // 🔥 NEW import
 
-void main() {
+Future<void> main() async {
+  // Ensure Widgets binding and dotenv load before runApp
+  WidgetsFlutterBinding.ensureInitialized();
+
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    debugPrint("⚠️ Failed to load .env file: $e");
+  }
+
   runApp(const MyApp());
 }
 
