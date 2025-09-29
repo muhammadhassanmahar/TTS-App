@@ -1,11 +1,12 @@
 import 'dart:typed_data';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ElevenLabsService {
-  static const String apiKey = "sk_f8503ec28746e443b6df5ea0dda634dae1cfe50aaa0b5c50";
+  static String get apiKey => dotenv.env['ELEVENLABS_API_KEY'] ?? "";
   static const String baseUrl = "https://api.elevenlabs.io/v1";
-  static const String defaultVoice = "pNInz6obpgDQGcFmaJgB"; // Ek sample voice
+  static const String defaultVoice = "pNInz6obpgDQGcFmaJgB"; // Sample voice
 
   /// 🔊 Text-to-Speech
   static Future<Uint8List?> textToSpeech(String text, {String? voiceId}) async {
