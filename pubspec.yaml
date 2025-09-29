@@ -29,6 +29,9 @@ dependencies:
   # File picker (optional if you want user to upload audio/video later)
   file_picker: ^8.0.6
 
+  # 🔑 For environment variables (API keys safely store)
+  flutter_dotenv: ^5.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -38,5 +41,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
- # assets:
-
+  # assets:
+  #   - assets/
+  assets:
+    - .env
