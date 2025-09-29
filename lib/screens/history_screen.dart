@@ -57,6 +57,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
                   onDismissed: (direction) {
                     _deleteItem(index);
+                    if (!mounted) return; // ✅ safety for context
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("History item deleted")),
                     );
@@ -69,7 +70,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     child: ListTile(
                       leading: Container(
                         decoration: BoxDecoration(
-                          color: Colors.deepPurple.withOpacity(0.15),
+                          // ✅ Fixed deprecated withOpacity
+                          color: Colors.deepPurple.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         padding: const EdgeInsets.all(8),
@@ -82,6 +84,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       ),
                       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                       onTap: () {
+                        if (!mounted) return; // ✅ safety
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Play audio for: $text")),
                         );
